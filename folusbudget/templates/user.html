@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{username}}{% endblock %}
+
+{% block content %}
+<h1> Welcome {{username}} </h1>
+{% if income == None %}
+	<h1>You're not poor! Put some money</h1>
+	<p>
+		<form action="" method=post>
+			<fieldset class="form-group">
+	                <legend class="border-bottom mb-4">Income</legend>
+                	<div class="form-group">
+                		<label for='income' class="form-control-label">Monthly Income</label>
+						<input type="number" name="income" id="income" class="form-control form-control-lg>
+                	</div>
+                	 <div class="form-group">
+		                <input type="submit" name="submit" value="Submit" class="btn btn-outline-info">
+		            </div>
+	        </fieldset>
+	    </form>
+	</p>
+{% else %}
+	<p>
+		<form action="" method="post">
+			<fieldset class="form-group">
+	                <legend class="border-bottom mb-4">New Budget</legend>
+	            	<div class="form-group">
+	            		<label for='category' class="form-control-label required">Category</label>
+						<input type="text" name="category" id="category" class="form-control form-control-lg>
+	            	</div>
+	            	<div class="form-group">
+	            		<label for='percentage' class="form-control-label required" min=1 max=100>Percentage</label>
+						<input type="number" name="percentage" id="percentage" class="form-control form-control-lg>
+	            	</div>
+	            	 <div class="form-group">
+		                <input type="submit" name="submit" value="Add Budget" class="btn btn-outline-info">
+		            </div>
+	        </fieldset>
+	    </form>
+	</p>
+	<!-- <p><a href={{url_for('budget_list')}}> <button class="button button1" action>My Budget</button></a></p> -->
+{% endif %}
+{% endblock %}

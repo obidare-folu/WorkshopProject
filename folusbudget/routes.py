@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, make_response
 from folusbudget import app
 from folusbudget.functions import *
 from folusbudget.models import *
@@ -37,6 +37,7 @@ def sign_up():
 
 @app.route('/<user>', methods=['GET', 'POST'])
 def client(user):
+
 	if 'user' in session:
 		this_user = User.query.filter_by(username = session['user']).first()
 		income = None
@@ -47,7 +48,9 @@ def client(user):
 			this_user.occupation = occupation
 
 		if request.method == 'GET':
-			return render_template('user.html', username=user, income=income, occupaton=occupation)
+			cookie = make_response(render_template('user.html', username=user, income=income, occupaton=occupation))
+			cookie.set_cookie('user', user)
+			return cookie
 
 		if income is not None:
 			category = request.form['category']
@@ -107,3 +110,7 @@ def print_item():
 		return redirect(url_for('client', user=session['user']))
 
 	return redirect(url_for('home'))
+
+# @app.route("/setcookie/<user>")
+# def set_cookie(user):
+# 	cookie = make_response()
